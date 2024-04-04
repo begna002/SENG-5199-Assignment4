@@ -13,17 +13,18 @@ struct MadLib: Codable {
     let story: String
     let questions: [Questions]
     
-    func createAnswerForm(answerList: [String]) -> FilledOutMadLib {
+    func createAnswerForm(answerList: [String], username: String) -> FilledOutMadLib {
         var answers: [Answer] = []
         for question in questions {
             answers.append(Answer(questionId: question.id, answerValue: answerList[question.position]))
         }
         let date = Date()
         let localISOFormatter = ISO8601DateFormatter()
+        localISOFormatter.timeZone = TimeZone(identifier: "America/Chicago")
         
         let dateString = localISOFormatter.string(from: date)
         
-        return FilledOutMadLib(madLibId: self.id, timestamp: dateString, answers: answers)
+        return FilledOutMadLib(madLibId: self.id, username: username, timestamp: dateString, answers: answers)
     }
 }
 

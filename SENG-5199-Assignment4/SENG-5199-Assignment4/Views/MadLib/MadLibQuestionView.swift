@@ -16,6 +16,8 @@ struct MadLibQuestionView: View {
     @State var canSubmit: Bool = false
     @State var responseString: String?
     @State var fetching: Bool = false
+    @StateObject var account = Account.shared
+
     var body: some View {
         ZStack {
             Form {
@@ -27,6 +29,7 @@ struct MadLibQuestionView: View {
                                     Text("\(question.description):").bold()
                                     TextField("Enter", text: $answerList[question.position])
                                         .disabled(responseString != nil)
+                                        .autocapitalization(.none)
                                 }
                             }
                         }
@@ -35,7 +38,8 @@ struct MadLibQuestionView: View {
                 } header: {
                     Text("Give me a...")
                 } footer: {
-                    HStack(alignment: .center) {
+                    VStack(alignment: .center) {
+                        Spacer()
                         Button("Submit") {
                             Task {
                                 fetching = true
@@ -54,8 +58,11 @@ struct MadLibQuestionView: View {
                             Text("Answer:")
                         }
                     } footer: {
-                        Button("Reset") {
-                            resetForm()
+                        VStack {
+                            Spacer()
+                            Button("Reset") {
+                                resetForm()
+                            }
                         }
                     }
                 }
@@ -102,7 +109,7 @@ struct MadLibQuestionView: View {
     
     func submitForm() async {
         if let madLib {
-            let answerForm = madLib.createAnswerForm(answerList: answerList)
+            let answerForm = madLib.createAnswerForm(answerList: answerList, username: account.userName)
             postAnswer(body: answerForm, completion: {msg in
                 responseString = msg
                 fetching = false

@@ -10,10 +10,12 @@ import SwiftData
 
 struct ContentView: View {
     @State private var selection: Tab = .madLibs
+    @StateObject var account = Account.shared
 
     enum Tab {
         case madLibs
         case completed
+        case account
     }
 
     var body: some View {
@@ -29,6 +31,12 @@ struct ContentView: View {
                     Label("Completed", systemImage: "checklist.checked.rtl")
                 }
                 .tag(Tab.completed)
+            
+            AccountView()
+                .tabItem {
+                    Label(account.userName, systemImage: "person.crop.circle.fill")
+                }
+                .tag(Tab.account)
         }
     }
 }

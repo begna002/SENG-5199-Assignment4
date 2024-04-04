@@ -9,7 +9,7 @@ import Foundation
 
 struct FilledOutMadLib: Codable {
     let madLibId: Int
-    var username: String = "begna002TEST2"
+    var username: String
     var timestamp: String 
     var answers: [Answer]
 }

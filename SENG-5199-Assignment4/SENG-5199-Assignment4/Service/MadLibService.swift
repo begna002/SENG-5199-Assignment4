@@ -92,8 +92,13 @@ func getAnswer(id: Int, completion: @escaping (String?) -> Void){
     task.resume()
 }
 
-func getAllAnswers(completion: @escaping ([MadLibAnswerResponse]?) -> Void){
-    let url = URL(string: "\(baseUrl)/api/PostMadLib?username=begna002TEST2" )!
+func getAllAnswers(userName: String, completion: @escaping ([MadLibAnswerResponse]?) -> Void){
+    if (userName == "") {
+        completion(nil)
+        return
+    }
+    
+    let url = URL(string: "\(baseUrl)/api/PostMadLib?username=\(userName)" )!
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
     
