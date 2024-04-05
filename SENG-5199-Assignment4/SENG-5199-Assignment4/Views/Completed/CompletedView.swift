@@ -50,17 +50,14 @@ struct CompletedView: View {
                 LoadingIndicator()
             }
         }
+        .refreshable {
+            fetchCompletedList()
+        }
         .task {
-            getAllAnswers(userName: account.userName, completion: {msg in
-                if let message = msg {
-                    madLibAnswerResponseList = message
-                    isError = false
-                } else {
-                    madLibAnswerResponseList = nil
-                    isError = true
-                }
-                
-            })
+            guard madLibAnswerResponseList != nil else {
+                fetchCompletedList()
+                return
+            }
         }
     }
     
@@ -78,6 +75,19 @@ struct CompletedView: View {
         } else {
             return ""
         }
+    }
+    
+    func fetchCompletedList() {
+        getAllAnswers(userName: account.userName, completion: {msg in
+            if let message = msg {
+                madLibAnswerResponseList = message
+                isError = false
+            } else {
+                madLibAnswerResponseList = nil
+                isError = true
+            }
+            
+        })
     }
 }
 

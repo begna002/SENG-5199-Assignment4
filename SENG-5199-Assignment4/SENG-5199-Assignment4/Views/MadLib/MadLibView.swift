@@ -32,8 +32,14 @@ struct MadLibView: View {
                 LoadingIndicator()
             }
         }
-        .task {
+        .refreshable {
             getAllMadLibs(completion: {msg in madLibResponseList = msg})
+        }
+        .task {
+            guard madLibResponseList != nil else {
+                getAllMadLibs(completion: {msg in madLibResponseList = msg})
+                return
+            }
         }
     }
 }
