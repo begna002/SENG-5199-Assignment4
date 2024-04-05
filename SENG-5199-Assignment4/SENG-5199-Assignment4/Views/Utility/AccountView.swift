@@ -11,7 +11,7 @@ import SwiftUI
 class Account: ObservableObject {
     static let shared = Account()
 
-    @Published var userName: String = "begna002TEST2"
+    @Published var userName: String = "begna002"
     
 }
 
