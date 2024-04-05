@@ -25,7 +25,7 @@ struct CompletedView: View {
                             } label: {
                                 VStack(alignment: .leading, content: {
                                     Text(madLibAnswer.storyTitle)
-                                    Text("Date: \(dateFormatter(dateString: madLibAnswer.timestamp))")
+                                    Text("\(dateFormatter(dateString: madLibAnswer.timestamp))")
                                         .font(.subheadline)
                                         .foregroundStyle(.secondary)
 
